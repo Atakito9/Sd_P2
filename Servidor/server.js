@@ -1,3 +1,5 @@
+//REVISAR CODIGO ENTERO
+
 import express from 'express'
 import bodyParser from 'body-parser'
 
@@ -34,7 +36,7 @@ app.get('/movie', (req, res) => {
     res.send(result)
 })
 
-
+//Añadir una pelicula
 app.put('/movie/:id', (req, res) => {
     const movieId = req.params.id
     const movieData = req.body
@@ -52,6 +54,7 @@ app.put('/movie/:id', (req, res) => {
     res.send({ status: 'success', id: movieId })
 })
 
+//Eliminar una pelicula
 app.delete('/movie/:id', (req, res) => {
     const movieId = req.params.id
     const index = movies.findIndex(m => m.id === movieId)
@@ -68,6 +71,7 @@ app.delete('/movie/:id', (req, res) => {
     res.send({ status: 'deleted' })
 })
 
+//Devolver al cliente
 app.get('/review/:movieId', (req, res) => {
     const movieId = req.params.movieId
     const movieReviews = reviews.filter(r => r.movieId === movieId).map(({ rating, comment }) => ({ rating, comment }))
@@ -95,17 +99,17 @@ app.put('/review/:movieId', (req, res) => {
     res.send({ status: 'success' })
 })
 
-// Eliminar valoraciones de una película [cite: 81]
+// Eliminar valoraciones de una película
 app.delete('/review/:movieId', (req, res) => {
     const movieId = req.params.movieId
     
-    // Comprobar que la película existe [cite: 84]
+    // Comprobar que la película existe
     const movieExists = movies.some(m => m.id === movieId)
     if (!movieExists) {
-        return res.status(404).send({ error: 'Movie not found' }) // [cite: 85]
+        return res.status(404).send({ error: 'Movie not found' }) 
     }
     
-    // Eliminar todas las valoraciones asociadas [cite: 86]
+    // Eliminar todas las valoraciones asociadas
     reviews = reviews.filter(r => r.movieId !== movieId)
     res.send({ status: 'reviews deleted' })
 })

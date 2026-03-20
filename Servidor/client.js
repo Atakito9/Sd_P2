@@ -1,20 +1,40 @@
 import axios from 'axios'
-// Dirección base del servidor
+
 const server = 'http://localhost:8080'
-// Función main
-async function main() {
+
+async function testHelloWorld(){
+    const result = await axios.get(server + '/')
+    return result.data // el campo data contendrá el resultado
+}
+
+const hello = await testHelloWorld()
+
+async function runTests() {
     try {
-// Probamos la conexión básica
-    console.log('--- Prueba de conexión ---')
-    const hello = await axios.get(server + '/')
-    console.log(hello.data)
-// Creamos varias películas
-        console.log('\n--- Crear películas ---')
-        console.log((await axios.put(server + '/movie/m1', {
-            title: 'Inception',
-            genre: 'sci-fi',
+        // Añadir una película
+        await axios.put(`${server}/movie/m1`, {
+            title: "Inception",
+            genre: "sci-fi",
             year: 2010,
             in_cinema: false
-        })).data)
-    }catch{}
-} 
+        })
+        
+        // Añadir valoración
+        const reviewData = { rating: 5, comment: "Excelente película" }
+        await axios.put(`${server}/review/m1`, reviewData)
+        
+        // Comprobar estadísticas
+        const stats = await axios.get(`${server}/stats`)
+        console.log("Estadísticas del sistema:", stats.data)
+
+        // Buscar texto
+        const search = await axios.get(`${server}/search?text=excelente`)
+        console.log("Resultados de búsqueda:", search.data)
+
+    } catch (error) {
+        console.error("Error en las pruebas:", error.response ? error.response.data : error.message)
+    }
+}
+
+await runTests()
+console.log('Prueba de conexión, resultado: ' + hello)
