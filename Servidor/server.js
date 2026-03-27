@@ -19,7 +19,7 @@ const datos = {
 
 // Función para guardar los datos actuales en el archivo JSON
 async function save() {
-    // Creamos el objeto con el estado actual de las variables globales [cite: 211, 216]
+    // Creamos el objeto con el estado actual de las variables globales 
     const datosAGuardar = {
         movies: movies,
         reviews: reviews
@@ -28,13 +28,13 @@ async function save() {
     await writeFile('datos.json', str, 'utf8')
 }
 
-// Función para cargar los datos al iniciar [cite: 224]
+// Función para cargar los datos al iniciar
 async function load() {
     try {
         const str = await readFile('datos.json', 'utf8')
         const datosCargados = JSON.parse(str)
         
-        // Asignamos los datos a las variables globales [cite: 228]
+        // Asignamos los datos a las variables globales
         movies = datosCargados.movies || []
         reviews = datosCargados.reviews || []
         console.log("Datos recuperados del archivo.")

@@ -1,1 +1,1 @@
-{"movies":[],"reviews":[]}
+{"movies":[{"id":"m1","title":"Inception","genre":"sci-fi","year":2010,"in_cinema":false},{"id":"m2","title":"Star Wars Ep:1","genre":"sci-fi","year":2001,"in_cinema":false}],"reviews":[{"movieId":"m1","rating":5,"comment":"Excelente película"},{"movieId":"m2","rating":5,"comment":"Excelente película, muy mítica"}]}
