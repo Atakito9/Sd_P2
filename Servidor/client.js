@@ -20,11 +20,11 @@ async function runTests() {
         })
         
         // Añadir valoración
-        const reviewData = { rating: 5, comment: "Excelente película" }
+        let reviewData = { rating: 5, comment: "Excelente película" }
         await axios.put(`${server}/review/m1`, reviewData)
 
         // Añadir una película
-        await axios.post(`${server}/movie/m2`, {
+        await axios.put(`${server}/movie/m2`, {
             title: "Star Wars Ep:1",
             genre: "sci-fi",
             year: 2001,

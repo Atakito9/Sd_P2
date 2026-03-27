@@ -89,12 +89,15 @@ app.delete('/movie/:id', async (req, res) => {
     res.send({ status: 'deleted' })
 })
 
-//Devolver al cliente
-app.get('/review/:movieId', (req, res) => {
-    const movieId = req.params.movieId
-    const movieReviews = reviews.filter(r => r.movieId === movieId).map(({ rating, comment }) => ({ rating, comment }))
+app.get('/movie/:id', (req, res) => {
+    const movieId = req.params.id
+    const index = movies.findIndex(m => m.id === movieId)
     
-    res.send(movieReviews)
+    if (index >= VALOR_NULO) {
+        res.send(movies[index])
+    } else {
+        res.status(404).send({ error: 'Movie not found' })
+    }
 })
 
 // Añadir una valoración
@@ -134,6 +137,13 @@ app.delete('/review/:movieId', async (req, res) => {
     res.send({ status: 'reviews deleted' })
 })
 
+//Devolver al cliente
+app.get('/review/:movieId', (req, res) => {
+    const movieId = req.params.movieId
+    const movieReviews = reviews.filter(r => r.movieId === movieId).map(({ rating, comment }) => ({ rating, comment }))
+    
+    res.send(movieReviews)
+})
 
 // --- CONSULTAS Y ESTADÍSTICAS ---
 
