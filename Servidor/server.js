@@ -11,6 +11,23 @@ const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
+import { writeFile } from 'fs/promises'
+const datos = {
+ movies:[],
+ reviews: []
+}
+async function save() {
+ const str = JSON.stringify(datos)
+ await writeFile('datos.json', str, 'utf8')
+}
+
+import { readFile } from 'fs/promises'
+ async function load() {
+ const str = await readFile('datos.json', 'utf8')
+ const datos = JSON.parse(str)
+ return datos
+}
+
 let movies = []
 let reviews = []
 

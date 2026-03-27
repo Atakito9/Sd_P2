@@ -22,6 +22,18 @@ async function runTests() {
         // Añadir valoración
         const reviewData = { rating: 5, comment: "Excelente película" }
         await axios.put(`${server}/review/m1`, reviewData)
+
+        // Añadir una película
+        await axios.post(`${server}/movie/m2`, {
+            title: "Star Wars Ep:1",
+            genre: "sci-fi",
+            year: 2001,
+            in_cinema: false
+        })
+        
+        // Añadir valoración
+        reviewData = { rating: 5, comment: "Excelente película, muy mítica" }
+        await axios.put(`${server}/review/m2`, reviewData)
         
         // Comprobar estadísticas
         const stats = await axios.get(`${server}/stats`)
