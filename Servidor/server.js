@@ -17,14 +17,33 @@ const datos = {
  reviews: []
 }
 
+// Función para guardar los datos actuales en el archivo JSON
 async function save() {
- const str = JSON.stringify(datos)
- await writeFile('datos.json', str, 'utf8')
+    // Creamos el objeto con el estado actual de las variables globales [cite: 211, 216]
+    const datosAGuardar = {
+        movies: movies,
+        reviews: reviews
+    }
+    const str = JSON.stringify(datosAGuardar)
+    await writeFile('datos.json', str, 'utf8')
 }
 
- async function load() {
- const str = await readFile('datos.json', 'utf8')
- return JSON.parse(str)
+// Función para cargar los datos al iniciar [cite: 224]
+async function load() {
+    try {
+        const str = await readFile('datos.json', 'utf8')
+        const datosCargados = JSON.parse(str)
+        
+        // Asignamos los datos a las variables globales [cite: 228]
+        movies = datosCargados.movies || []
+        reviews = datosCargados.reviews || []
+        console.log("Datos recuperados del archivo.")
+    } catch (error) {
+        // Si el archivo no existe, empezamos con arrays vacíos 
+        console.log("Archivo no encontrado o vacío. Iniciando catálogo nuevo.")
+        movies = []
+        reviews = []
+    }
 }
 
 let movies = []
