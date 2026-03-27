@@ -1,5 +1,3 @@
-//REVISAR CODIGO ENTERO
-
 import express from 'express'
 import bodyParser from 'body-parser'
 
@@ -12,16 +10,18 @@ app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({ extended: false }))
 
 import { writeFile } from 'fs/promises'
+import { readFile } from 'fs/promises'
+
 const datos = {
  movies:[],
  reviews: []
 }
+
 async function save() {
  const str = JSON.stringify(datos)
  await writeFile('datos.json', str, 'utf8')
 }
 
-import { readFile } from 'fs/promises'
  async function load() {
  const str = await readFile('datos.json', 'utf8')
  return JSON.parse(str)
@@ -191,4 +191,5 @@ app.get('/search', (req, res) => {
     res.send(results)
 })
 
+await load()
 const server = app.listen(PORT, () => console.log("listening at localhost:"+PORT))
