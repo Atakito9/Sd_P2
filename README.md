@@ -24,11 +24,13 @@ El sistema permitirá:
 
 • obtener estadísticas generales del catálogo.
 
+
 Para implementar este servicio, el sistema necesita gestionar dos tipos de recursos:
 
 • películas
 
 • valoraciones
+
 
 Cada película tendrá información básica como el título, el género, el año de estreno y un campo que indica si la película sigue disponible en el cine.
 
@@ -194,3 +196,6 @@ async function load() {
 }
 ```
 En la funcion load va a crear un archivo datos.json en el que va a guardar todos los datos que mandemos al servidor, y cada vez que tenemos que iniciarlo no hay que mandar cada vez con el cliente los datos, creando permanencia.
+
+## Problemas encotrados
+**//TERMINAR//**
