@@ -85,10 +85,84 @@ Luego con `npm install` instalamos las librerias express y axios.
 ## Inicio de la Practica
 ### Paso 1 - Metodos iniciales del server
 
+Server.js:
+```javascript
+app.get('/', (req, res) => {
+    res.send('Main page')
+    //Importante: Ejecutar res.send siempre para poder
+    //completar la petición, y no dejar la conexión pendiente,
+    //incluso si no se quiere enviar nada de vuelta
+})
+```
+
+Client.js:
+```javascript
+import axios from 'axios'
+
+const server = 'http://localhost:8080'
+
+async function testHelloWorld(){
+    const result = await axios.get(server + '/')
+    return result.data // el campo data contendrá el resultado
+}
+
+const hello = await testHelloWorld()
+console.log('Prueba de conexión, resultado: ' + hello)
+```
+Se deberia de ver:
+**//IMAGEN//**
+
 ### Paso 2 - Completar el API para implementar/eliminar peliculas
+
+```javascript
+
+```
+
+Añadimos esta funcion en el client.js para cada vez que iniciamos el servidor enviar los datos por el cliente:
+```javascript
+async function runTests() {
+    try {
+        // Añadir una película
+        await axios.put(`${server}/movie/m1`, {
+            title: "Inception",
+            genre: "sci-fi",
+            year: 2010,
+            in_cinema: false
+        })
+        
+        // Añadir valoración
+        let reviewData = { rating: 5, comment: "Excelente película" }
+        await axios.put(`${server}/review/m1`, reviewData)
+
+        // Añadir una película
+        await axios.put(`${server}/movie/m2`, {
+            title: "Star Wars Ep:1",
+            genre: "sci-fi",
+            year: 2001,
+            in_cinema: false
+        })
+        
+        // Añadir valoración
+        reviewData = { rating: 5, comment: "Excelente película, muy mítica" }
+        await axios.put(`${server}/review/m2`, reviewData)
+        
+        // Comprobar estadísticas
+        const stats = await axios.get(`${server}/stats`)
+        console.log("Estadísticas del sistema:", stats.data)
+
+        // Buscar texto
+        const search = await axios.get(`${server}/search?text=excelente`)
+        console.log("Resultados de búsqueda:", search.data)
+
+    } catch (error) {
+        console.error("Error en las pruebas:", error.response ? error.response.data : error.message)
+    }
+}
+```
 
 ### Paso 3 - Incluir persistencia en el sistema
 
+Añadimos en el Server.js estas dos funciones:
 ```javascript
 // Función para guardar los datos actuales en el archivo JSON
 async function save() {
@@ -118,4 +192,5 @@ async function load() {
         reviews = []
     }
 }
-``` 
+```
+En la funcion load va a crear un archivo datos.json en el que va a guardar todos los datos que mandemos al servidor, y cada vez que tenemos que iniciarlo no hay que mandar cada vez con el cliente los datos, creando permanencia.
