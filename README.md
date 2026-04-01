@@ -7,23 +7,35 @@
 En esta práctica vamos a implementar un servicio para gestionar un catálogo de películas y sus correspondientes valoraciones y comentarios realizados por los usuarios.
 
 El sistema permitirá:
+
 • registrar películas en el catálogo.
+
 • consultar las películas del catálogo.
+
 • buscar películas por género, año o si siguen en cartelera.
+
 • añadir valoraciones y comentarios sobre una película.
+
 • consultar las valoraciones de una película.
+
 • calcular la valoración media de una película.
+
 • buscar películas cuyos comentarios contengan una palabra determinada.
+
 • obtener estadísticas generales del catálogo.
 
 Para implementar este servicio, el sistema necesita gestionar dos tipos de recursos:
+
 • películas
+
 • valoraciones
 
 Cada película tendrá información básica como el título, el género, el año de estreno y un campo que indica si la película sigue disponible en el cine.
 
 Cada valoración estará formada por:
+
 • rating: puntuación numérica entre 1 y 5
+
 • comment: comentario de texto con la opinión del usuario
 
 ## Versiones del codigo - Estable v1.0
