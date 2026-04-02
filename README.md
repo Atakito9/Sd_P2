@@ -112,7 +112,7 @@ const hello = await testHelloWorld()
 console.log('Prueba de conexión, resultado: ' + hello)
 ```
 Al ejecutar el cliente, se ve en consola el resultado de la prueba de conexión.
-![](Imagenes/Captura1.png)
+![](Imagenes/Captura1.PNG)
 
 ### Paso 2 - Completar el API para implementar/eliminar peliculas
 
