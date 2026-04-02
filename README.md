@@ -1,9 +1,14 @@
 # Sd_P2
 ## Practica 2
 
-![](https://img.shields.io/badge/version-v1.0-blue) ![](https://img.shields.io/badge/Node.js-Backend-green) ![](https://img.shields.io/badge/Express-API-lightgray) ![](https://img.shields.io/badge/Axios-HTTP_Client-informational)
-<br>
-![](https://upload.wikimedia.org/wikipedia/commons/e/ea/Netflix_Logomark.png)
+<div align="center">
+  <img src="https://img.shields.io/badge/version-v1.0-blue" alt="Version">
+  <img src="https://img.shields.io/badge/Node.js-Backend-green" alt="Node.js">
+  <img src="https://img.shields.io/badge/Express-API-lightgray" alt="Express">
+  <img src="https://img.shields.io/badge/Axios-HTTP_Client-informational" alt="Axios">
+  <br><br>
+  <img src="https://upload.wikimedia.org/wikipedia/commons/e/ea/Netflix_Logomark.png" alt="Netflix Logo" width="150">
+</div>
 
 <details>
 <summary><b>Tabla de Contenidos (Desplegar)</b></summary>
@@ -48,7 +53,6 @@ Cada valoración estará formada por:
 • comment: comentario de texto con la opinión del usuario
 
 ## Versiones del codigo - Estable v1.0
-<details>
 ```text
 Sd_P2/
 ├── node_modules/
@@ -58,13 +62,12 @@ Sd_P2/
 ├── client.js
 ├── datos.json
 └── README.md
-````
-</details>
+```
 
 ## IMPORTANTE
-⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
+> [!IMPORTANT] ⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
 
-⚠︎ Cambia el codigo del cliente para añadir / eliminar peliculas 
+> [!IMPORTANT] ⚠︎ Cambia el codigo del cliente para añadir / eliminar peliculas 
 
 ## Preparacion
 
@@ -191,12 +194,11 @@ app.get('/movie/:id', (req, res) => {
     }
 })
 ```
-<details>
+
 En resumen, esto es lo que hace la primera parte de nuestro codigo:
 * **Consultas (`GET /movie` y `GET /movie/:id`):** Permite listar el catálogo completo o buscar una entidad concreta. Soporta la aplicación de filtros mediante *query parameters* (por ejemplo, buscar por género o año).
 * **Registros y Actualizaciones (`PUT /movie/:id`):** Evalúa la existencia previa del identificador proporcionado. Si la comprobación devuelve un índice igual o superior a un límite nulo, actualiza las propiedades; si no, instancia una nueva película.
 * **Borrado (`DELETE /movie/:id`):** Retira la película del sistema y, para garantizar la integridad, purga cualquier valoración que referencie dicho identificador.
-</details>
 
 Ademas de filtrar por peliculas tambien queremos ver y añadir comentarios, estadisticas de la pelicula, valoracion media, y filtrar por comentarios.
 ```javascript
@@ -292,14 +294,13 @@ app.get('/search', (req, res) => {
 })
 ```
 Resumiendo, esto es lo que hace la segunda parte de este codigo:
-<details>
+
 * **Aportaciones de usuarios (`PUT /review/:movieId`):** Verifica que la película de destino exista en el sistema y aplica una validación estricta para garantizar que la puntuación se mantenga dentro de los límites esperados (valor mínimo y valor máximo permitidos).
 * **Lectura (`GET /review/:movieId`):** Filtra y retorna las valoraciones asociadas al identificador de la película solicitada.
 * **Limpieza (`DELETE /review/:movieId`):** Permite el borrado independiente de todas las interacciones de los usuarios sobre una película concreta.
 * **Cálculo de medias (`GET /rating/:movieId`):** Evalúa todas las reseñas de una película. Si la cantidad de reseñas es superior a un valor nulo, realiza el sumatorio y obtiene la media; de lo contrario, devuelve una magnitud base de ausencia o estado vacío.
 * **Estadísticas globales (`GET /stats`):** Cuantifica el volumen de datos en memoria (total de entidades y valoraciones) junto con el promedio general del servicio.
 * **Motor de texto (`GET /search`):** Analiza recursivamente el contenido de los comentarios en busca de coincidencias con la cadena solicitada, retornando un mapeo de las películas que lo contienen.
-</details>
 
 Por ultimo añadimos esta funcion en el client.js para cada vez que iniciamos el servidor enviar los datos por el cliente:
 ```javascript
@@ -384,3 +385,14 @@ Cada vez que se añada algo desde el cliente, la funcion save va a escribir en e
 
 ## Problemas encotrados
 **//TERMINAR//**
+
+## Creditos
+<div align="center">
+<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api%3Fusername%3DAtakito9%26show_icons%3Dtrue%26theme%3Dradical%26hide_border%3Dtrue" alt="GitHub Stats" />
+<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api/top-langs/%3Fusername%3DAtakito9%26layout%3Dcompact%26theme%3Dradical%26hide_border%3Dtrue" alt="Top Languages" />
+</div>
+
+<div align="center">
+<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api%3Fusername%3DSkyckino%26show_icons%3Dtrue%26theme%3Dradical%26hide_border%3Dtrue" alt="GitHub Stats" />
+<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api/top-langs/%3Fusername%3DSkyckino%26layout%3Dcompact%26theme%3Dradical%26hide_border%3Dtrue" alt="Top Languages" />
+</div>
