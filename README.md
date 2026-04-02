@@ -65,9 +65,9 @@ Sd_P2/
 ```
 
 ## IMPORTANTE
-[!IMPORTANT] ⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
-
-[!IMPORTANT] ⚠︎ Cambia el codigo del cliente para añadir / eliminar peliculas 
+⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
+⚠︎ Cambia el codigo del cliente para añadir / eliminar peliculas 
+Este codigo usa librerias node para correr el codigo. `node Server.js`/`node Client.js`
 
 ## Preparacion
 
@@ -136,7 +136,11 @@ console.log('Prueba de conexión, resultado: ' + hello)
 ```
 
 Al ejecutar el servidor, se ve en consola el resultado de la prueba de conexión.
-![](Imagenes/Captura1.PNG)
+
+<div align="center">
+  <img src="Imagenes/Captura1.PNG" width="580">
+</div>
+
 
 ### Paso 2 - Completar el API para implementar/eliminar peliculas
 
@@ -344,8 +348,8 @@ async function runTests() {
 }
 ```
 Despues de haber ejecutado el servidor(`node server.js`) y el cliente (`node client.js`) aqui podemos ver si buscamos las peliculas, nos va a salir en formato codigo lo que hemos enviado por el cliente (Nuestra base de datos por ahora)
-![](Imagenes/Captura2.PNG)
-![](Imagenes/Captura3.PNG)
+<img src="Imagenes/Captura2.PNG" width="500">
+<img src="Imagenes/Captura3.PNG" width="500">
 
 ### Paso 3 - Incluir persistencia en el sistema
 
@@ -385,14 +389,3 @@ Cada vez que se añada algo desde el cliente, la funcion save va a escribir en e
 
 ## Problemas encotrados
 **//TERMINAR//**
-
-## Creditos
-<div align="center">
-<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api%3Fusername%3DAtakito9%26show_icons%3Dtrue%26theme%3Dradical%26hide_border%3Dtrue" alt="GitHub Stats" />
-<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api/top-langs/%3Fusername%3DAtakito9%26layout%3Dcompact%26theme%3Dradical%26hide_border%3Dtrue" alt="Top Languages" />
-</div>
-
-<div align="center">
-<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api%3Fusername%3DSkyckino%26show_icons%3Dtrue%26theme%3Dradical%26hide_border%3Dtrue" alt="GitHub Stats" />
-<img src="https://www.google.com/search?q=https://github-readme-stats.vercel.app/api/top-langs/%3Fusername%3DSkyckino%26layout%3Dcompact%26theme%3Dradical%26hide_border%3Dtrue" alt="Top Languages" />
-</div>
