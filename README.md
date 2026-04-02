@@ -65,9 +65,9 @@ Sd_P2/
 ```
 
 ## IMPORTANTE
-> [!IMPORTANT] ⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
+[!IMPORTANT] ⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
 
-> [!IMPORTANT] ⚠︎ Cambia el codigo del cliente para añadir / eliminar peliculas 
+[!IMPORTANT] ⚠︎ Cambia el codigo del cliente para añadir / eliminar peliculas 
 
 ## Preparacion
 
