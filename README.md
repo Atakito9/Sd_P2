@@ -86,6 +86,7 @@ Luego con `npm install` instalamos las librerias express y axios.
 
 ## Inicio de la Practica
 ### Paso 1 - Metodos iniciales del server
+Usamos el codigo dado y creamos 2 archivos nuevos, uno sera Server.js y el otro Client.js.
 
 Server.js:
 ```javascript
@@ -111,16 +112,177 @@ async function testHelloWorld(){
 const hello = await testHelloWorld()
 console.log('Prueba de conexión, resultado: ' + hello)
 ```
-Al ejecutar el cliente, se ve en consola el resultado de la prueba de conexión.
+
+Al ejecutar el servidor, se ve en consola el resultado de la prueba de conexión.
 ![](Imagenes/Captura1.PNG)
 
 ### Paso 2 - Completar el API para implementar/eliminar peliculas
 
+Añadimos estas rutas en server.js para gestionar la creación y borrado de los recursos:
 ```javascript
+// Añadir o actualizar una película
+app.put('/movie/:id', async (req, res) => {
+    const movieId = req.params.id
+    const movieData = req.body
+    
+    const index = movies.findIndex(m => m.id === movieId)
+    
+    if (index >= VALOR_NULO) {
+        // Si existe, se actualiza
+        movies[index] = { id: movieId, ...movieData }
+    } else {
+        // Si no existe, se crea
+        movies.push({ id: movieId, ...movieData })
+    }
+    
+    await save()
+    res.send({ status: 'success', id: movieId })
+})
 
+// Eliminar una película
+app.delete('/movie/:id', async (req, res) => {
+    const movieId = req.params.id
+    const index = movies.findIndex(m => m.id === movieId)
+    
+    if (index < VALOR_NULO) {
+        // Si no existe se devuelve un error
+        return res.status(404).send({ error: 'Movie not found' })
+    }
+    
+    movies.splice(index, 1)
+    // Se eliminan también las valoraciones asociadas
+    reviews = reviews.filter(r => r.movieId !== movieId)
+    
+    await save()
+    res.send({ status: 'deleted' })
+})
 ```
 
-Añadimos esta funcion en el client.js para cada vez que iniciamos el servidor enviar los datos por el cliente:
+Ahora que podemos añadir y eliminar peliculas, necesitamos un metodo para filtrar y buscar las peliculas.
+Con este codigo conseguimos esto y si la pelicula no existe, el servidor lanza un 404 al usuario:
+```javascript
+app.get('/movie/:id', (req, res) => {
+    const movieId = req.params.id
+    const index = movies.findIndex(m => m.id === movieId)
+    
+    if (index >= VALOR_NULO) {
+        res.send(movies[index])
+    } else {
+        res.status(404).send({ error: 'Movie not found' })
+    }
+})
+```
+<details>
+En resumen, esto es lo que hace la primera parte de nuestro codigo:
+* **Consultas (`GET /movie` y `GET /movie/:id`):** Permite listar el catálogo completo o buscar una entidad concreta. Soporta la aplicación de filtros mediante *query parameters* (por ejemplo, buscar por género o año).
+* **Registros y Actualizaciones (`PUT /movie/:id`):** Evalúa la existencia previa del identificador proporcionado. Si la comprobación devuelve un índice igual o superior a un límite nulo, actualiza las propiedades; si no, instancia una nueva película.
+* **Borrado (`DELETE /movie/:id`):** Retira la película del sistema y, para garantizar la integridad, purga cualquier valoración que referencie dicho identificador.
+</details>
+
+Ademas de filtrar por peliculas tambien queremos ver y añadir comentarios, estadisticas de la pelicula, valoracion media, y filtrar por comentarios.
+```javascript
+// Añadir una valoración
+app.put('/review/:movieId', async (req, res) => {
+    const movieId = req.params.movieId
+    const { rating, comment } = req.body
+    
+    // Comprobar que la película existe
+    const movieExists = movies.some(m => m.id === movieId)
+    if (!movieExists) {
+        return res.status(404).send({ error: 'Movie not found' })
+    }
+    
+    // Rating debe estar entre los límites establecidos
+    if (!Number.isInteger(rating) || rating < MIN_RATING || rating > MAX_RATING) {
+        return res.status(400).send({ error: `Rating must be an integer between ${MIN_RATING} and ${MAX_RATING}` })
+    }
+    
+    reviews.push({ movieId, rating, comment })
+    await save()
+    res.send({ status: 'success' })
+})
+
+// Eliminar valoraciones de una película
+app.delete('/review/:movieId', async (req, res) => {
+    const movieId = req.params.movieId
+    
+    // Comprobar que la película existe
+    const movieExists = movies.some(m => m.id === movieId)
+    if (!movieExists) {
+        return res.status(404).send({ error: 'Movie not found' }) 
+    }
+    
+    // Eliminar todas las valoraciones asociadas
+    reviews = reviews.filter(r => r.movieId !== movieId)
+    await save()
+    res.send({ status: 'reviews deleted' })
+})
+
+//Devolver al cliente
+app.get('/review/:movieId', (req, res) => {
+    const movieId = req.params.movieId
+    const movieReviews = reviews.filter(r => r.movieId === movieId).map(({ rating, comment }) => ({ rating, comment }))
+    
+    res.send(movieReviews)
+})
+
+// --- CONSULTAS Y ESTADÍSTICAS ---
+
+// Obtener valoración media de una película
+app.get('/rating/:movieId', (req, res) => {
+    const movieId = req.params.movieId
+    const movieReviews = reviews.filter(r => r.movieId === movieId)
+    const nReviews = movieReviews.length
+    
+    // Cálculo simbólico de la media
+    let average = VALOR_NULO // Si no existen valoraciones la media será 0
+    if (nReviews > VALOR_NULO) {
+        const sum = movieReviews.reduce((acc, curr) => acc + curr.rating, VALOR_NULO)
+        average = sum / nReviews
+    }
+    
+    res.send({ movie: movieId, reviews: nReviews, average })
+})
+
+// Obtener estadísticas globales
+app.get('/stats', (req, res) => {
+    const totalMovies = movies.length
+    const totalReviews = reviews.length
+    
+    let averageRating = VALOR_NULO // Si no existen valoraciones la media será 0
+    if (totalReviews > VALOR_NULO) {
+        const sum = reviews.reduce((acc, curr) => acc + curr.rating, VALOR_NULO)
+        averageRating = sum / totalReviews // Media de todas las valoraciones
+    }
+    
+    res.send({ movies: totalMovies, reviews: totalReviews, average_rating: averageRating })
+})
+// Búsqueda en comentarios
+app.get('/search', (req, res) => {
+    const searchText = req.query.text ? req.query.text.toLowerCase() : ''
+    
+    const results = movies.map(movie => {
+        const movieReviews = reviews.filter(r => r.movieId === movie.id)
+        // La búsqueda no distingue entre mayúsculas y minúsculas
+        const matches = movieReviews.filter(r => r.comment && r.comment.toLowerCase().includes(searchText)).length
+        
+        return { id: movie.id, title: movie.title, matches }
+    }).filter(movie => movie.matches > VALOR_NULO) // Solo se devolverán películas con coincidencias
+    
+    res.send(results)
+})
+```
+Resumiendo, esto es lo que hace la segunda parte de este codigo:
+<details>
+* **Aportaciones de usuarios (`PUT /review/:movieId`):** Verifica que la película de destino exista en el sistema y aplica una validación estricta para garantizar que la puntuación se mantenga dentro de los límites esperados (valor mínimo y valor máximo permitidos).
+* **Lectura (`GET /review/:movieId`):** Filtra y retorna las valoraciones asociadas al identificador de la película solicitada.
+* **Limpieza (`DELETE /review/:movieId`):** Permite el borrado independiente de todas las interacciones de los usuarios sobre una película concreta.
+* **Cálculo de medias (`GET /rating/:movieId`):** Evalúa todas las reseñas de una película. Si la cantidad de reseñas es superior a un valor nulo, realiza el sumatorio y obtiene la media; de lo contrario, devuelve una magnitud base de ausencia o estado vacío.
+* **Estadísticas globales (`GET /stats`):** Cuantifica el volumen de datos en memoria (total de entidades y valoraciones) junto con el promedio general del servicio.
+* **Motor de texto (`GET /search`):** Analiza recursivamente el contenido de los comentarios en busca de coincidencias con la cadena solicitada, retornando un mapeo de las películas que lo contienen.
+</details>
+
+Por ultimo añadimos esta funcion en el client.js para cada vez que iniciamos el servidor enviar los datos por el cliente:
 ```javascript
 async function runTests() {
     try {
@@ -161,6 +323,9 @@ async function runTests() {
     }
 }
 ```
+Despues de haber ejecutado el servidor(`node server.js`) y el cliente (`node client.js`) aqui podemos ver si buscamos las peliculas, nos va a salir en formato codigo lo que hemos enviado por el cliente (Nuestra base de datos por ahora)
+![](Imagenes/Captura2.PNG)
+![](Imagenes/Captura3.PNG)
 
 ### Paso 3 - Incluir persistencia en el sistema
 
@@ -196,6 +361,7 @@ async function load() {
 }
 ```
 En la funcion load va a crear un archivo datos.json en el que va a guardar todos los datos que mandemos al servidor, y cada vez que tenemos que iniciarlo no hay que mandar cada vez con el cliente los datos, creando permanencia.
+Cada vez que se añada algo desde el cliente, la funcion save va a escribir en el archivo para la proxima vez.
 
 ## Problemas encotrados
 **//TERMINAR//**
