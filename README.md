@@ -1,29 +1,36 @@
 # Sd_P2
 ## Practica 2
 
-![](https://img.shields.io/badge/version-v1.0-blue)
+![](https://img.shields.io/badge/version-v1.0-blue) ![](https://img.shields.io/badge/Node.js-Backend-green) ![](https://img.shields.io/badge/Express-API-lightgray) ![](https://img.shields.io/badge/Axios-HTTP_Client-informational)
+<br>
 ![](https://upload.wikimedia.org/wikipedia/commons/e/ea/Netflix_Logomark.png)
+
+<details>
+<summary><b>Tabla de Contenidos (Desplegar)</b></summary>
+
+1. [Preparacion](#preparacion)
+2. [Inicio de la Practica](#inicio-de-la-practica)
+    * [Paso 1 - Metodos iniciales del server](#paso-1---metodos-iniciales-del-server)
+    * [Paso 2 - Completar el API para implementar/eliminar peliculas](#paso-2---completar-el-api-para-implementareliminar-peliculas)
+    * [Paso 3 - Incluir persistencia en el sistema](#paso-3---incluir-persistencia-en-el-sistema)
+3. [Problemas encotrados](#problemas-encotrados)
+
+</details>
+
+---
 
 En esta práctica vamos a implementar un servicio para gestionar un catálogo de películas y sus correspondientes valoraciones y comentarios realizados por los usuarios.
 
 El sistema permitirá:
 
-• registrar películas en el catálogo.
-
-• consultar las películas del catálogo.
-
-• buscar películas por género, año o si siguen en cartelera.
-
-• añadir valoraciones y comentarios sobre una película.
-
-• consultar las valoraciones de una película.
-
-• calcular la valoración media de una película.
-
-• buscar películas cuyos comentarios contengan una palabra determinada.
-
-• obtener estadísticas generales del catálogo.
-
+- [x] registrar películas en el catálogo.
+- [x] consultar las películas del catálogo.
+- [x] buscar películas por género, año o si siguen en cartelera.
+- [x] añadir valoraciones y comentarios sobre una película.
+- [x] consultar las valoraciones de una película.
+- [x] calcular la valoración media de una película.
+- [x] buscar películas cuyos comentarios contengan una palabra determinada.
+- [x] obtener estadísticas generales del catálogo.
 
 Para implementar este servicio, el sistema necesita gestionar dos tipos de recursos:
 
@@ -41,6 +48,18 @@ Cada valoración estará formada por:
 • comment: comentario de texto con la opinión del usuario
 
 ## Versiones del codigo - Estable v1.0
+<details>
+```text
+Sd_P2/
+├── node_modules/
+├── package.json
+├── package-lock.json
+├── server.js
+├── client.js
+├── datos.json
+└── README.md
+````
+</details>
 
 ## IMPORTANTE
 ⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
