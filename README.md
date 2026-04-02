@@ -65,9 +65,8 @@ Sd_P2/
 ```
 
 ## IMPORTANTE
-⚠︎ El servidor se ejecuta primero y luego el cliente para implementar las pelicula en terminales diferentes
-⚠︎ Cambia el codigo del cliente para añadir / eliminar peliculas 
-Este codigo usa librerias node para correr el codigo. `node Server.js`/`node Client.js`
+⚠︎ Este codigo usa librerias node para correr el codigo. `node Server.js`/`node Client.js`
+⚠︎ Este codigo usa Express y Axios. `sudo apt install axios`/`sudo apr install express`
 
 ## Preparacion
 
