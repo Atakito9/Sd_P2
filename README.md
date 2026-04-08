@@ -387,4 +387,4 @@ En la funcion load va a crear un archivo datos.json en el que va a guardar todos
 Cada vez que se añada algo desde el cliente, la funcion save va a escribir en el archivo para la proxima vez.
 
 ## Problemas encotrados
-**//TERMINAR//**
+Durante la realización de la práctica hemos encontrado un par de problemas siendo el más grande la implementación de la permanencia de datos ya que no conseguíamos que se guardaran dichos cambios en el txt como al resto, así que incluimos unas modificaciones para arreglarlo.
